@@ -1,0 +1,47 @@
+<ui:composition template="template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="navigation">
+        <ui:include src="bookkeeper_navigation.xhtml"/>
+    </ui:define>
+    <ui:define name="content">
+        <p:dataTable var="real_role" value="#{bookkeeperViewBean.allRealPlayedRoles}" paginator="true"
+                     rows="20" emptyMessage="#{msg.emptyRealPlayedRoles}">
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.performance}"/>
+                </f:facet>
+                <p:outputLabel value="#{real_role.realPlayedRole.performance.title}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.role}"/>
+                </f:facet>
+                <p:outputLabel value="#{real_role.realPlayedRole.name}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.actor}"/>
+                </f:facet>
+                <p:outputLabel value="#{real_role.realPlayedActor.surname} #{real_role.realPlayedActor.name}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.premium}"/>
+                </f:facet>
+                <p:outputLabel value="#{real_role.premium}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.date}"/>
+                </f:facet>
+                <h:outputText value="#{real_role.date}">
+                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>            
+        </p:dataTable> 
+        <p:messages severity="error" autoUpdate="true"/>
+    </ui:define>
+</ui:composition>

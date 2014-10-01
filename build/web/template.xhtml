@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Theatre System</title>
+    </h:head>
+    <h:body>        
+        <p:layout fullPage="true" style="background-color: background">
+            <p:layoutUnit position="north" style="size: 250px">
+                <div style="float: right">
+                    <h:outputFormat value="#{w.hello}">
+                        <f:param value="#{loginBean.name}"/>
+                    </h:outputFormat>                    
+                    <h:form>
+                        <p:commandButton value="#{w.logOut}" action="#{loginBean.logout()}"/>
+                    </h:form>   
+                </div>
+            </p:layoutUnit>
+            <p:layoutUnit position="west" style="size: 1000px">
+                <ui:insert name="navigation"/>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <ui:insert name="content"/>
+            </p:layoutUnit>
+        </p:layout>        
+    </h:body>
+</html>
+

@@ -1,0 +1,36 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="navigation">
+        <ui:include src="producer_navigation.xhtml"/>
+    </ui:define>
+    <ui:define name="content">
+        <center>            
+            <h:form>
+                <p:panelGrid columns="1">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="#{w.performance}"/>
+                        <p:selectOneMenu value="#{producerViewBean.performance}" 
+                                         converter="#{performanceConverterBean}">
+                            <f:selectItem value="#{null}" itemLabel=""/>
+                            <f:selectItems var="performance" value="#{producerViewBean.myPerformances}" 
+                                           itemLabel="#{performance.title}" itemValue="#{performance}">                                 
+                            </f:selectItems>
+                            <p:ajax event="change" update="roles"/>
+                        </p:selectOneMenu>                                              
+                    </p:panelGrid>
+                    <p:dataList id="roles" var="role" value="#{producerViewBean.rolesByPerformance}">
+                        <f:facet name="header">
+                            <p:outputLabel value="#{w.role}"/>
+                        </f:facet>
+                        <p:outputLabel value="#{role.name}"/>
+                    </p:dataList>                    
+                </p:panelGrid>              
+                <p:messages severity="error" autoUpdate="true"/>
+            </h:form>
+        </center>      
+    </ui:define>
+</ui:composition>

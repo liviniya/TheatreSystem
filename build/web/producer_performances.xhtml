@@ -1,0 +1,34 @@
+<ui:composition template="template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="navigation">
+        <ui:include src="producer_navigation.xhtml"/>
+    </ui:define>
+    <ui:define name="content">
+        <p:dataTable var="performance" value="#{producerViewBean.myPerformances}" paginator="true"
+                     rows="4" emptyMessage="#{msg.emptyPerformances}" tableStyle="width: auto" >
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.title}"/>
+                </f:facet>
+                <p:outputLabel value="#{performance.title}"/>
+            </p:column>  
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.date}"/>
+                </f:facet>
+                <h:outputText value="#{performance.date}">
+                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>              
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.description}" style="white-space: pre-wrap"/>
+                </f:facet>
+                <p:outputLabel value="#{performance.description}" style="white-space: pre-wrap"/>
+            </p:column>  
+        </p:dataTable>        
+    </ui:define>
+</ui:composition>

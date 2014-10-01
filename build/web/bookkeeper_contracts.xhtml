@@ -1,0 +1,56 @@
+<ui:composition template="template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="navigation">
+        <ui:include src="bookkeeper_navigation.xhtml"/>
+    </ui:define>
+    <ui:define name="content">
+        <p:dataTable var="contract" value="#{bookkeeperViewBean.allContracts}" paginator="true"
+                     rows="10" emptyMessage="#{msg.emptyContracts}" resizableColumns="true"
+                     tableStyle="width: auto">
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.performance}"/>
+                </f:facet>
+                <p:outputLabel value="#{contract.role.performance.title}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.role}"/>
+                </f:facet>
+                <p:outputLabel value="#{contract.role.name}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.actor}"/>
+                </f:facet>
+                <p:outputLabel value="#{contract.actor.surname} #{contract.actor.name}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.salary}"/>
+                </f:facet>
+                <p:outputLabel value="#{contract.salary}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.startDate}"/>
+                </f:facet>
+                <h:outputText value="#{contract.startDate}">
+                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.endDate}"/>
+                </f:facet>
+                <h:outputText value="#{contract.endDate}">
+                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+        </p:dataTable> 
+        <p:messages severity="error" autoUpdate="true"/>
+    </ui:define>
+</ui:composition>
