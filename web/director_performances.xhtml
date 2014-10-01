@@ -1,0 +1,47 @@
+<ui:composition template="template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="navigation">
+        <ui:include src="director_navigation.xhtml"/>
+    </ui:define>
+    <ui:define name="content">
+        <p:dataTable var="performance" value="#{directorViewBean.allPerformances}" paginator="true"
+                     rows="10" emptyMessage="#{msg.emptyPerformances}" tableStyle="width: auto">
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.title}"/>
+                </f:facet>
+                <p:outputLabel value="#{performance.title}"/>
+            </p:column>  
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.date}"/>
+                </f:facet>
+                <h:outputText value="#{performance.date}">
+                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>  
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.budget}"/>
+                </f:facet>
+                <p:outputLabel value="#{performance.budget}"/>
+            </p:column> 
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.description}"/>
+                </f:facet>
+                <p:outputLabel value="#{performance.description}" style="white-space: pre-wrap"/>
+            </p:column>  
+            <p:column>
+                <f:facet name="header">
+                    <p:outputLabel value="#{w.producer}"/>
+                </f:facet>
+                <p:outputLabel value="#{performance.producer.surname} #{performance.producer.name}"/>
+            </p:column>
+        </p:dataTable>      
+        <p:messages severity="error" autoUpdate="true"/>
+    </ui:define>
+</ui:composition>

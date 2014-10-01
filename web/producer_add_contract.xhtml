@@ -1,0 +1,52 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="navigation">
+        <ui:include src="producer_navigation.xhtml"/>
+    </ui:define>
+    <ui:define name="content">
+        <center>            
+            <h:form>
+                <p:panelGrid columns="1">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="#{w.actor}"/>
+                        <p:selectOneMenu value="#{producerAddContractBean.contract.actor}" converter="#{actorConverterBean}">
+                            <f:selectItems var="actor" value="#{producerViewBean.getActors()}"
+                                           itemLabel="#{actor.surname} #{actor.name}" itemValue="#{actor}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{w.performance}"/>
+                        <p:selectOneMenu value="#{producerAddContractBean.performance}" converter="#{performanceConverterBean}">
+                            <f:selectItems var="performance" value="#{producerViewBean.myPerformances}"
+                                           itemLabel="#{performance.title}" itemValue="#{performance}"/>
+                            <p:ajax event="change" update="roles"/>
+                        </p:selectOneMenu>                        
+                        <p:outputLabel value="#{w.role}"/>
+                        <p:selectOneMenu id="roles" value="#{producerAddContractBean.contract.role}" converter="#{roleConverterBean}">
+                            <f:selectItems var="role" value="#{producerAddContractBean.byPerformance}"
+                                           itemLabel="#{role.name}" itemValue="#{role}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{w.startDate}"/>
+                        <p:calendar id="startDate" value="#{producerAddContractBean.contract.startDate}" 
+                                    required="true" requiredMessage="#{msg.startDateRequired}" 
+                                    readonlyInput="true" pattern="dd/MM/yyyy">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            <p:ajax event="dateSelect" update="endDate"/>
+                        </p:calendar>
+                        <p:outputLabel value="#{w.endDate}"/>
+                        <p:calendar id="endDate" value="#{producerAddContractBean.contract.endDate}" 
+                                    readonlyInput="true" pattern="dd/MM/yyyy">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            <f:attribute name="startDate" value="#{producerAddContractBean.contract.startDate}"/>
+                            <f:validator validatorId="dateRangeValidator"/>
+                        </p:calendar>
+                    </p:panelGrid>
+                    <p:commandButton value="#{w.save}" action="#{producerAddContractBean.saveContract()}"/>
+                </p:panelGrid>              
+                <p:messages severity="error" autoUpdate="true"/>
+            </h:form>
+        </center>      
+    </ui:define>
+</ui:composition>
