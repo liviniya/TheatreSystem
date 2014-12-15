@@ -10,6 +10,7 @@
     <ui:define name="content">
         <center>            
             <h:form>
+                <p:growl id="message" autoUpdate="true" severity="info"/>
                 <p:panelGrid columns="1">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="#{w.performance}"/>
@@ -36,9 +37,10 @@
                                            itemLabel="#{actor.surname} #{actor.name}" itemValue="#{actor}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton value="#{w.save}" action="#{producerAddRealRoleBean.saveRealPlayedRole()}"/>
+                    <p:commandButton value="#{w.save}" action="#{producerAddRealRoleBean.saveRealPlayedRole()}"
+                                     update="message"/>
                 </p:panelGrid>              
-                <p:messages severity="error" autoUpdate="true"/>
+                <p:messages severity="error" autoUpdate="true" closable="true"/>
             </h:form>
         </center>      
     </ui:define>

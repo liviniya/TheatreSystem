@@ -7,42 +7,79 @@
         <ui:include src="director_navigation.xhtml"/>
     </ui:define>
     <ui:define name="content">
-        <p:dataTable var="worker" value="#{directorViewBean.allWorkers}" paginator="true"
-                     rows="10" emptyMessage="#{msg.emptyWorkers}" resizableColumns="true">
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.surname}"/>
-                </f:facet>
-                <p:outputLabel value="#{worker.surname}"/>
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.name}"/>
-                </f:facet>
-                <p:outputLabel value="#{worker.name}"/>
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.position}"/>
-                </f:facet>
-                <p:outputLabel value="#{worker.position.toString()}"/>
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.startWorkDate}"/>
-                </f:facet>
-                <h:outputText value="#{worker.startWorkDate}">
-                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
-                </h:outputText>
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.endWorkDate}"/>
-                </f:facet>
-                <h:outputText value="#{worker.endWorkDate}">
-                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
-                </h:outputText>
-            </p:column>
-        </p:dataTable>        
+        <h:form>
+            <p:growl id="message" autoUpdate="true" severity="error"/>
+            <p:dataTable id="workers" var="worker" value="#{directorViewBean.allWorkers}" paginator="true"
+                         rows="10" emptyMessage="#{msg.emptyWorkers}" resizableColumns="true"
+                         tableStyle="width: auto" editable="true">
+                <p:ajax event="rowEdit" listener="#{directorViewBean.onWorkerEdit}"/>
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.surname}"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{worker.surname}"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{worker.surname}"
+                                                           required="true" requiredMessage="#{msg.surnameRequired}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.name}"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{worker.name}"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{worker.name}"
+                                                           required="true" requiredMessage="#{msg.nameRequired}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.position}"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{worker.position.toString()}"/></f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu value="#{worker.position}">
+                                <f:selectItems var="position" value="#{directorViewBean.allPositions}"
+                                               itemLabel="#{position.toString()}" 
+                                               itemValue="#{position}"/>
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.startWorkDate}"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{worker.startWorkDate}">
+                                <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                            </h:outputText></f:facet>
+                        <f:facet name="input"><p:calendar value="#{worker.startWorkDate}"
+                                                          readonlyInput="true" pattern="dd/MM/yyyy" locale="ua">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:calendar></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.endWorkDate}"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{worker.endWorkDate}">
+                                <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                            </h:outputText></f:facet>
+                        <f:facet name="input"><p:calendar value="#{worker.endWorkDate}"
+                                                          readonlyInput="true" pattern="dd/MM/yyyy" locale="ua">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:calendar></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column>
+                    <p:rowEditor/>
+                </p:column>
+            </p:dataTable>             
+        </h:form>
     </ui:define>
 </ui:composition>

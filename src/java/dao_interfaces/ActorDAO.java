@@ -20,4 +20,7 @@ public interface ActorDAO {
     
     Actor findById(Long id);
     
+    void update(Actor actor);
+    
+    void delete(Actor actor) throws Exception;
 }

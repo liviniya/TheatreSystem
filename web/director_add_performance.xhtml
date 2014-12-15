@@ -7,9 +7,10 @@
     <ui:define name="navigation">
         <ui:include src="director_navigation.xhtml"/>
     </ui:define>
-    <ui:define name="content">
+    <ui:define name="content">        
         <center>            
             <h:form>
+                <p:growl id="message" autoUpdate="true" severity="info"/>
                 <p:panelGrid columns="1">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="#{w.title}"/>
@@ -17,7 +18,7 @@
                                      required="true" requiredMessage="#{msg.titleRequired}"/>
                         <p:outputLabel value="#{w.date}"/>
                         <p:calendar value="#{directorAddPerformanceBean.performance.date}"
-                                    readonlyInput="true" pattern="dd/MM/yyyy">
+                                    readonlyInput="true" pattern="dd/MM/yyyy" locale="ua">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:calendar>
                         <p:outputLabel value="#{w.description}"/>
@@ -30,9 +31,10 @@
                                            itemValue="#{producer}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton value="#{w.save}" action="#{directorAddPerformanceBean.savePerformance()}"/>
+                    <p:commandButton value="#{w.save}" action="#{directorAddPerformanceBean.savePerformance()}"
+                                     update="message"/>
                 </p:panelGrid>              
-                <p:messages severity="error" autoUpdate="true"/>
+                <p:messages severity="error" autoUpdate="true" closable="true"/>
             </h:form>
         </center>      
     </ui:define>

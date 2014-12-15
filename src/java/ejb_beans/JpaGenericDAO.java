@@ -47,4 +47,9 @@ public class JpaGenericDAO<T> {
     public Class<T> getEntityClass() {
         return entityClass;
     }
+    
+    public void delete(T entity) throws Exception{
+        entity = em.merge(entity);
+        em.remove(entity);
+    }
 }

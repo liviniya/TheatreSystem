@@ -17,9 +17,11 @@ import entities.Role;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -72,6 +74,11 @@ public class ProducerAddRealRoleBean {
             jpaContractDAO.update(c);
         }
         jpaRealPlayedRoleDAO.create(realPlayedRole);
+        FacesContext context = FacesContext.getCurrentInstance(); 
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        context.getApplication().getResourceBundle(context, "msg")
+                            .getString("newRealRoleAdded"), null));
         return "producer_add_real_role?faces-redirect=true";
     }
 

@@ -12,8 +12,10 @@ import entities.User;
 import entities.Worker;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import utils.PasswordEncryptor;
 
 /**
@@ -43,6 +45,11 @@ public class DirectorAddWorkerBean {
     public String saveWorker() {
         worker.getUser().setPassword((new PasswordEncryptor()).getEncoded(worker.getUser().getPassword()));
         jpaWorkerDAO.create(worker);
+        FacesContext context = FacesContext.getCurrentInstance(); 
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        context.getApplication().getResourceBundle(context, "msg")
+                            .getString("newWorkerAdded"), null));
         return "director_add_worker?faces-redirect=true";
     }
 

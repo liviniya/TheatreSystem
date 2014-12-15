@@ -10,8 +10,10 @@ import dao_interfaces.RoleDAO;
 import entities.Performance;
 import entities.Role;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -34,7 +36,12 @@ public class ProducerAddRoleBean {
     
     public String saveRole() {
         jpaRoleDAO.create(role);        
-        role = new Role();        
+        role = new Role(); 
+        FacesContext context = FacesContext.getCurrentInstance(); 
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        context.getApplication().getResourceBundle(context, "msg")
+                            .getString("newRoleAdded"), null));
         return "producer_add_role?faces-redirect=true";
     }
     

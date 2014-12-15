@@ -27,4 +27,6 @@ public interface PerformanceDAO {
     void update(Performance performance);
     
     void create(Performance performance);
+    
+    void delete(Performance performance) throws Exception;
 }

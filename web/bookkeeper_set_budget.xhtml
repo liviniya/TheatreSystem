@@ -3,17 +3,21 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
     <ui:define name="navigation">
         <ui:include src="bookkeeper_navigation.xhtml"/>
     </ui:define>
     <ui:define name="content">
         <center>            
             <h:form>
+                <p:growl id="message" autoUpdate="true" severity="info"/>
                 <p:panelGrid columns="1">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="#{w.performance}"/>
-                        <p:selectOneMenu value="#{bookkeeperSetBudgetBean.performance}" converter="#{performanceConverterBean}">
+                        <p:selectOneMenu value="#{bookkeeperSetBudgetBean.performance}" 
+                                         converter="#{performanceConverterBean}" required="true"
+                                         requiredMessage="#{msg.performanceRequired}">
                             <f:selectItems var="performance" value="#{bookkeeperSetBudgetBean.emptyBudgets}" 
                                            itemLabel="#{performance.title}" itemValue="#{performance}">                                 
                             </f:selectItems>
@@ -22,12 +26,16 @@
                         <h:inputText required="true" requiredMessage="#{msg.budgetRequired}"
                                    validatorMessage="#{msg.budgetPositiveInteger}" value="#{bookkeeperSetBudgetBean.budget}"
                                    converterMessage="#{msg.budgetPositiveInteger}">
-                            <f:validateLongRange minimum="0"/>
+                            <f:validateLongRange minimum="0" maximum="1000000000"/>
                         </h:inputText>
                     </p:panelGrid>
-                    <p:commandButton value="#{w.save}" action="#{bookkeeperSetBudgetBean.savePerformance()}"/>
+                    <p:commandButton value="#{w.save}" action="#{bookkeeperSetBudgetBean.savePerformance()}"
+                                     rendered="#{not empty bookkeeperSetBudgetBean.emptyBudgets}"
+                                     update="message"/>
+                    <h:outputLabel value="#{msg.noEmptyBudgetPerformances}"
+                                   rendered="#{empty bookkeeperSetBudgetBean.emptyBudgets}"/>
                 </p:panelGrid>              
-                <p:messages severity="error" autoUpdate="true"/>
+                <p:messages severity="error" autoUpdate="true" closable="true"/>
             </h:form>
         </center>      
     </ui:define>

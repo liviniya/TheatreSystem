@@ -13,8 +13,10 @@ import entities.Position;
 import entities.Worker;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -39,6 +41,11 @@ public class DirectorAddPerformanceBean {
     
     public String savePerformance() {
         jpaPerformanceDAO.create(performance);
+        FacesContext context = FacesContext.getCurrentInstance(); 
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        context.getApplication().getResourceBundle(context, "msg")
+                            .getString("performanceAdded"), null));
         return "director_add_performance?faces-redirect=true";
     }
 

@@ -13,8 +13,11 @@ import entities.Performance;
 import entities.RealPlayedRole;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -23,14 +26,19 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class BookkeeperViewBean {
+
     @EJB
     private RealPlayedRoleDAO jpaRealPlayedRoleDAO;
-    
+
     @EJB
     private ContractDAO jpaContractDAO;
 
     @EJB
     private PerformanceDAO jpaPerformanceDAO;
+
+    private List<Contract> contracts;
+    private List<Performance> performances;
+    private List<RealPlayedRole> realPlayedRoles;
 
     /**
      * Creates a new instance of BookkeeperViewBean
@@ -39,14 +47,38 @@ public class BookkeeperViewBean {
     }
 
     public List<Performance> getAllPerformances() {
-        return jpaPerformanceDAO.findAll();
+        if (performances == null) {
+            performances = jpaPerformanceDAO.findAll();
+        }
+        return performances;
     }
-    
+
     public List<Contract> getAllContracts() {
-        return jpaContractDAO.findAll();
+        if (contracts == null) {
+            contracts = jpaContractDAO.findAll();
+        }
+        return contracts;
+    }
+
+    public List<RealPlayedRole> getAllRealPlayedRoles() {
+        if (realPlayedRoles == null) {
+            realPlayedRoles = jpaRealPlayedRoleDAO.findAll();
+        }
+        return realPlayedRoles;
+    }
+
+    public void onContractSalaryEdit(RowEditEvent event) {
+        Contract selectedContract = (Contract) event.getObject();
+        jpaContractDAO.update(selectedContract);
     }
     
-    public List<RealPlayedRole> getAllRealPlayedRoles() {
-        return jpaRealPlayedRoleDAO.findAll();
+    public void onPerformanceBudgetEdit(RowEditEvent event) {
+        Performance selectedPerformance = (Performance) event.getObject();
+        jpaPerformanceDAO.update(selectedPerformance);
+    }
+    
+    public void onPremiumEdit(RowEditEvent event) {
+        RealPlayedRole role = (RealPlayedRole) event.getObject();
+        jpaRealPlayedRoleDAO.update(role);
     }
 }

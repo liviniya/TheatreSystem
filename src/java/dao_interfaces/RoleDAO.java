@@ -22,4 +22,6 @@ public interface RoleDAO {
     Role findById(Long id);
     
     List<Role> findAll();
+    
+    void delete(Role role) throws Exception;
 }

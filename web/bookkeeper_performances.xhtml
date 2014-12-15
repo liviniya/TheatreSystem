@@ -7,29 +7,47 @@
         <ui:include src="bookkeeper_navigation.xhtml"/>
     </ui:define>
     <ui:define name="content">
-        <p:dataTable var="performance" value="#{bookkeeperViewBean.allPerformances}" paginator="true"
-                     rows="10" emptyMessage="#{msg.emptyPerformances}" resizableColumns="true">
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.title}"/>
-                </f:facet>
-                <p:outputLabel value="#{performance.title}"/>
-            </p:column>  
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.date}"/>
-                </f:facet>
-                <h:outputText value="#{performance.date}">
-                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
-                </h:outputText>
-            </p:column>  
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.budget}"/>
-                </f:facet>
-                <p:outputLabel value="#{performance.budget}"/>
-            </p:column>
-        </p:dataTable>      
-        <p:messages severity="error" autoUpdate="true"/>
+        <h:form>
+            <p:dataTable var="performance" value="#{bookkeeperViewBean.allPerformances}" paginator="true"
+                         rows="10" emptyMessage="#{msg.emptyPerformances}" resizableColumns="true"
+                         tableStyle="width: auto" editable="true">
+                <p:ajax event="rowEdit" listener="#{bookkeeperViewBean.onPerformanceBudgetEdit}"/>
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.title}"/>
+                    </f:facet>
+                    <p:outputLabel value="#{performance.title}"/>
+                </p:column>  
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.date}"/>
+                    </f:facet>
+                    <h:outputText value="#{performance.date}">
+                        <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                    </h:outputText>
+                </p:column>  
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.budget}"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{performance.budget}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{performance.budget}" 
+                                         converterMessage="#{msg.budgetPositiveInteger}"
+                                         validatorMessage="#{msg.budgetPositiveInteger}">
+                                <f:validateLongRange minimum="0" maximum="1000000000"/>
+                            </p:inputText>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column>
+                    <p:rowEditor/>
+                </p:column>
+            </p:dataTable>  
+        </h:form>
+        <p:messages severity="error" autoUpdate="true" closable="true"/>
     </ui:define>
 </ui:composition>

@@ -26,4 +26,8 @@ public interface WorkerDAO {
     List<Position> findAllPositions();
     
     void create(Worker worker);
+    
+    void update(Worker worker);
+    
+    void delete(Worker worker) throws Exception;
 }

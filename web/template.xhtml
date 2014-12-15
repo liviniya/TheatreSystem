@@ -7,6 +7,37 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Theatre System</title>
+        <script type="text/javascript">
+            $(function() {
+                PrimeFaces.locales ['ua'] = {
+                    closeText: 'Закрити',
+                    prevText: 'Назад',
+                    nextText: 'Вперед',
+                    currentText: 'Home',
+                    monthNames: ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'],
+                    monthNamesShort: ['Січ', 'Лют', 'Вер', 'Кві', 'Тра', 'Чер', 'Лип', 'Сер', 'Вер', 'Жов', 'Лис', 'Гру'],
+                    dayNames: ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П`ятниця', 'Субота', 'Неділя'],
+                    dayNamesShort: ['Пон', 'Вт', 'Ср', 'Четв', 'Пят', 'Суб', 'Нед'],
+                    dayNamesMin: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'],
+                    weekHeader: 'Тиждень',
+                    firstDay: 0,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: '',
+                    timeOnlyTitle: 'Тільки час',
+                    timeText: 'Час',
+                    hourText: 'Година',
+                    minuteText: 'Хвилина',
+                    secondText: 'Секунда',
+                    currentText: 'Сьогодні',
+                            ampm: false,
+                    month: 'Місяць',
+                    week: 'Тиждень',
+                    day: 'День',
+                    allDayText: 'Весь день'
+                };
+            });
+        </script>
     </h:head>
     <h:body>        
         <p:layout fullPage="true" style="background-color: background">

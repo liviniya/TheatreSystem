@@ -31,4 +31,6 @@ public interface ContractDAO {
     List<Contract> findByEmptySalary();
     
     void update(Contract contract);
+    
+    void delete(Contract contract) throws Exception;
 }

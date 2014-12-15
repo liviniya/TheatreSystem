@@ -10,11 +10,13 @@
     <ui:define name="content">
         <center>            
             <h:form>
+                <p:growl id="message" autoUpdate="true" severity="info"/>
                 <p:panelGrid columns="1">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="#{w.realPlayedRoles}"/>
                         <p:selectOneMenu value="#{bookkeeperSetPremiumBean.realRole}" 
-                                         converter="#{realRoleConverterBean}">
+                                         converter="#{realRoleConverterBean}"
+                                         required="true" requiredMessage="#{msg.roleRequired}">
                             <f:selectItems var="real_role" value="#{bookkeeperSetPremiumBean.emptyPremiums}" 
                                            itemLabel="#{real_role.realPlayedRole.performance.title}: 
                                            #{real_role.realPlayedRole.name} -> 
@@ -27,12 +29,15 @@
                                    required="true" requiredMessage="#{msg.premiumRequired}"
                                    converterMessage="#{msg.premiumPositiveInteger}"
                                    validatorMessage="#{msg.premiumPositiveInteger}">
-                            <f:validateLongRange minimum="0"/>
+                            <f:validateLongRange minimum="0" maximum="1000000000"/>
                         </h:inputText>
                     </p:panelGrid>
-                    <p:commandButton value="#{w.save}" action="#{bookkeeperSetPremiumBean.saveRealRole()}"/>
+                    <p:commandButton value="#{w.save}" action="#{bookkeeperSetPremiumBean.saveRealRole()}"
+                                     rendered="#{not empty bookkeeperSetPremiumBean.emptyPremiums}"
+                                     update="message"/>
+                    <p:outputLabel value="#{msg.noNewRealRoles}" rendered="#{empty bookkeeperSetPremiumBean.emptyPremiums}"/>
                 </p:panelGrid>              
-                <p:messages severity="error" autoUpdate="true"/>
+                <p:messages severity="error" autoUpdate="true" closable="true"/>
             </h:form>
         </center>      
     </ui:define>

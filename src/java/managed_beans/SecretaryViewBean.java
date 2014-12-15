@@ -11,15 +11,19 @@ import entities.Actor;
 import entities.Worker;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
  * @author Oksana_Moroz
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class SecretaryViewBean {
 
     @EJB
@@ -27,7 +31,10 @@ public class SecretaryViewBean {
 
     @EJB
     private WorkerDAO jpaWorkerDAO;
-
+    
+    private List<Actor> actors;
+    private Actor selectedActor;
+    private boolean renew = false;
     /**
      * Creates a new instance of SecretaryBean
      */
@@ -39,7 +46,36 @@ public class SecretaryViewBean {
     }
 
     public List<Actor> getActors() {
-        return jpaActorDAO.findAll();
+        if (actors == null || renew) {
+            renew = false;
+            actors = jpaActorDAO.findAll();
+        }
+        return actors;
     }
 
+    public void onActorEdit(RowEditEvent event) {
+        Actor a = (Actor) event.getObject();
+        jpaActorDAO.update(a);
+    }
+
+    public Actor getSelectedActor() {
+        return selectedActor;
+    }
+
+    public void setSelectedActor(Actor actor) {
+        this.selectedActor = actor;
+    }
+    
+    public void deleteSelectedActor() {
+        try {
+            renew = true;
+            jpaActorDAO.delete(selectedActor);
+        } catch (Exception ex) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    context.getApplication().getResourceBundle(context, "msg")
+                    .getString("deleteImpossible"), null));
+        }
+    }
 }

@@ -10,8 +10,10 @@ import dao_interfaces.PerformanceDAO;
 import entities.Performance;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -38,9 +40,13 @@ public class BookkeeperSetBudgetBean {
     }
     
     public String savePerformance() {
-        System.out.println("performance=" + performance);
         performance.setBudget(budget);
         jpaPerformanceDAO.update(performance);
+        FacesContext context = FacesContext.getCurrentInstance(); 
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        context.getApplication().getResourceBundle(context, "msg")
+                            .getString("budgetSet"), null));
         return "bookkeeper_set_budget?faces-redirect=true";
     }
 

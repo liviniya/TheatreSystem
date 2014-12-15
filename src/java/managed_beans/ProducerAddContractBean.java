@@ -13,9 +13,11 @@ import entities.Performance;
 import entities.Role;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -47,6 +49,11 @@ public class ProducerAddContractBean {
     public String saveContract() {
         jpaContractDAO.create(contract);
         contract = new Contract();
+        FacesContext context = FacesContext.getCurrentInstance(); 
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        context.getApplication().getResourceBundle(context, "msg")
+                            .getString("newContractAdded"), null));
         return "producer_add_contract?faces-redirect=true";
     }
     

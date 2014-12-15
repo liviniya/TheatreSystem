@@ -23,4 +23,6 @@ public interface RealPlayedRoleDAO {
     List<RealPlayedRole> findByEmptyPremium();
     
     void update(RealPlayedRole realPlayedRole);
+    
+    void delete(RealPlayedRole performance) throws Exception;
 }

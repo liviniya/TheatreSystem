@@ -10,8 +10,10 @@ import dao_interfaces.ContractDAO;
 import entities.Contract;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -39,6 +41,12 @@ public class BookkeeperSetSalaryBean {
     public String saveContract() {
         contract.setSalary(salary);
         jpaContractDAO.update(contract);
+        
+        FacesContext context = FacesContext.getCurrentInstance(); 
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        context.getApplication().getResourceBundle(context, "msg")
+                            .getString("salarySet"), null));
         return "bookkeeper_set_salary?faces-redirect=true";
     }
 

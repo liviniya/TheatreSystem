@@ -11,8 +11,10 @@ import entities.RealPlayedRole;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -41,6 +43,11 @@ public class BookkeeperSetPremiumBean {
         realRole.setPremium(premium);
         realRole.setDate(new Date());
         jpaRealPlayedRoleDAO.update(realRole);
+        FacesContext context = FacesContext.getCurrentInstance(); 
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        context.getApplication().getResourceBundle(context, "msg")
+                            .getString("premiumSet"), null));
         return "bookkeeper_set_premium?faces-redirect=true";
     }
 

@@ -7,41 +7,85 @@
         <ui:include src="director_navigation.xhtml"/>
     </ui:define>
     <ui:define name="content">
-        <p:dataTable var="performance" value="#{directorViewBean.allPerformances}" paginator="true"
-                     rows="10" emptyMessage="#{msg.emptyPerformances}" tableStyle="width: auto">
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.title}"/>
-                </f:facet>
-                <p:outputLabel value="#{performance.title}"/>
-            </p:column>  
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.date}"/>
-                </f:facet>
-                <h:outputText value="#{performance.date}">
-                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
-                </h:outputText>
-            </p:column>  
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.budget}"/>
-                </f:facet>
-                <p:outputLabel value="#{performance.budget}"/>
-            </p:column> 
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.description}"/>
-                </f:facet>
-                <p:outputLabel value="#{performance.description}" style="white-space: pre-wrap"/>
-            </p:column>  
-            <p:column>
-                <f:facet name="header">
-                    <p:outputLabel value="#{w.producer}"/>
-                </f:facet>
-                <p:outputLabel value="#{performance.producer.surname} #{performance.producer.name}"/>
-            </p:column>
-        </p:dataTable>      
-        <p:messages severity="error" autoUpdate="true"/>
+        <h:form>
+            <p:growl id="message" autoUpdate="true" severity="info"/>
+            <p:dataTable id="performances" var="performance" value="#{directorViewBean.allPerformances}" paginator="true"
+                         rows="10" emptyMessage="#{msg.emptyPerformances}" tableStyle="width: auto"
+                         editable="true" resizableColumns="true">
+                <p:ajax event="rowEdit" listener="#{directorViewBean.onPerformanceEdit}"/>
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.title}"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{performance.title}"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{performance.title}"
+                                                           required="true" requiredMessage="#{msg.titleRequired}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>  
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.date}"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{performance.date}">
+                                <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                            </h:outputText></f:facet>
+                        <f:facet name="input"><p:calendar value="#{performance.date}"
+                                                          readonlyInput="true" pattern="dd/MM/yyyy" locale="ua">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:calendar></f:facet>
+                    </p:cellEditor>
+                </p:column>  
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.budget}"/>
+                    </f:facet>
+                    <p:outputLabel value="#{performance.budget}"/>
+                </p:column> 
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.description}"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{performance.description}" style="white-space: pre-wrap"/></f:facet>
+                        <f:facet name="input"><p:inputTextarea value="#{performance.description}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>  
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="#{w.producer}"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{performance.producer.surname} #{performance.producer.name}"/></f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu value="#{performance.producer}"
+                                             converter="#{workerConverterBean}">
+                                <f:selectItems var="producer" value="#{directorViewBean.allProducers}"
+                                               itemLabel="#{producer.surname} #{producer.name}" 
+                                               itemValue="#{producer}"/>
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column>
+                    <p:rowEditor/>
+                </p:column>
+                <p:column>
+                    <p:commandLink styleClass="ui-icon ui-icon-trash" 
+                                   action="#{directorViewBean.setSelectedPerformance(performance)}"
+                                   onclick="deleteConfirmation.show()" ajax="true"/>
+                </p:column>
+            </p:dataTable> 
+            
+            <p:confirmDialog widgetVar="deleteConfirmation" message="#{msg.areYouSure}" 
+                             severity="alert" appendToBody="true">
+                <p:commandButton value="#{msg.yes}" oncomplete="deleteConfirmation.hide()" process="@this"
+                                 actionListener="#{directorViewBean.deleteSelectedPerformance}"
+                                 update="performances"/>
+                <p:commandButton value="#{msg.no}" oncomplete="deleteConfirmation.hide()"/>
+            </p:confirmDialog>
+        </h:form>
+        <p:messages severity="error" autoUpdate="true" closable="true"/>
     </ui:define>
 </ui:composition>

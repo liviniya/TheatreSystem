@@ -58,4 +58,6 @@ public class JpaWorkerDAO extends JpaGenericDAO<Worker> implements WorkerDAO {
         user.setWorker(worker);
         em.persist(user);
     }
+    
+    
 }
