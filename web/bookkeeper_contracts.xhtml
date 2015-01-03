@@ -8,11 +8,11 @@
     </ui:define>
     <ui:define name="content">
         <h:form id="form">
-            <p:dataTable var="contract" value="#{bookkeeperViewBean.allContracts}" paginator="true"
+            <p:dataTable var="contract" value="#{bookkeeperTableBean.allContracts}" paginator="true"
                          rows="10" emptyMessage="#{msg.emptyContracts}" resizableColumns="true"
                          tableStyle="width: auto" editable="true">
 
-                <p:ajax event="rowEdit" listener="#{bookkeeperViewBean.onContractSalaryEdit}"/>
+                <p:ajax event="rowEdit" listener="#{bookkeeperTableBean.onContractSalaryEdit}"/>
 
                 <p:column>
                     <f:facet name="header">

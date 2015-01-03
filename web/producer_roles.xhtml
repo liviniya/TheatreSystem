@@ -14,16 +14,16 @@
                 <p:panelGrid columns="1">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="#{w.performance}"/>
-                        <p:selectOneMenu value="#{producerViewBean.performance}" 
+                        <p:selectOneMenu value="#{producerTableBean.performance}" 
                                          converter="#{performanceConverterBean}">
                             <f:selectItem value="#{null}" itemLabel=""/>
-                            <f:selectItems var="performance" value="#{producerViewBean.myPerformances}" 
+                            <f:selectItems var="performance" value="#{producerTableBean.myPerformances}" 
                                            itemLabel="#{performance.title}" itemValue="#{performance}">                                 
                             </f:selectItems>
-                            <p:ajax event="change" listener="#{producerViewBean.setRenew()}" update="roles"/>
+                            <p:ajax event="change" listener="#{producerTableBean.setRenew()}" update="roles"/>
                         </p:selectOneMenu>                                              
                     </p:panelGrid>
-                    <p:dataTable id="roles" var="role" value="#{producerViewBean.rolesByPerformance}"
+                    <p:dataTable id="roles" var="role" value="#{producerTableBean.rolesByPerformance}"
                                  emptyMessage="#{msg.emptyRoles}">
                         <p:column>
                             <f:facet name="header">
@@ -33,7 +33,7 @@
                         </p:column>
                         <p:column>
                             <p:commandLink styleClass="ui-icon ui-icon-trash"
-                                           action="#{producerViewBean.setSelectedRole(role)}"
+                                           action="#{producerTableBean.setSelectedRole(role)}"
                                            onclick="deleteConfirmation.show()"  ajax="true"/>
                         </p:column>
                     </p:dataTable>
@@ -41,7 +41,7 @@
                     <p:confirmDialog widgetVar="deleteConfirmation" message="#{msg.areYouSure}" 
                                      severity="alert" appendToBody="true">
                         <p:commandButton value="#{msg.yes}" oncomplete="deleteConfirmation.hide()" process="@this"
-                                         actionListener="#{producerViewBean.deleteSelectedRole}" update="roles"/>
+                                         actionListener="#{producerTableBean.deleteSelectedRole}" update="roles"/>
                         <p:commandButton value="#{msg.no}" oncomplete="deleteConfirmation.hide()"/>
                     </p:confirmDialog>
                 </p:panelGrid>              

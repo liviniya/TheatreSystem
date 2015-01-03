@@ -13,10 +13,8 @@ import entities.Performance;
 import entities.RealPlayedRole;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -25,7 +23,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @ManagedBean
 @RequestScoped
-public class BookkeeperViewBean {
+public class BookkeeperTableBean {
 
     @EJB
     private RealPlayedRoleDAO jpaRealPlayedRoleDAO;
@@ -43,7 +41,7 @@ public class BookkeeperViewBean {
     /**
      * Creates a new instance of BookkeeperViewBean
      */
-    public BookkeeperViewBean() {
+    public BookkeeperTableBean() {
     }
 
     public List<Performance> getAllPerformances() {

@@ -38,7 +38,7 @@ public class ProducerAddContractBean {
     private Performance performance;
     
     @ManagedProperty(value = "#{producerViewBean}")
-    private ProducerViewBean producerViewBean;
+    private ProducerTableBean producerViewBean;
     
     /**
      * Creates a new instance of ProducerAddContractBean
@@ -83,11 +83,11 @@ public class ProducerAddContractBean {
         this.performance = performance;
     }
 
-    public ProducerViewBean getProducerViewBean() {
+    public ProducerTableBean getProducerViewBean() {
         return producerViewBean;
     }
 
-    public void setProducerViewBean(ProducerViewBean producerViewBean) {
+    public void setProducerViewBean(ProducerTableBean producerViewBean) {
         this.producerViewBean = producerViewBean;
     }    
 }

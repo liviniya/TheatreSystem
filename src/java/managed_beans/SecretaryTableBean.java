@@ -24,7 +24,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @ManagedBean
 @ViewScoped
-public class SecretaryViewBean {
+public class SecretaryTableBean {
 
     @EJB
     private ActorDAO jpaActorDAO;
@@ -38,7 +38,7 @@ public class SecretaryViewBean {
     /**
      * Creates a new instance of SecretaryBean
      */
-    public SecretaryViewBean() {
+    public SecretaryTableBean() {
     }
 
     public List<Worker> getWorkers() {

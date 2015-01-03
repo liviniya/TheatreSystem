@@ -24,7 +24,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @ManagedBean
 @ViewScoped
-public class DirectorViewBean {
+public class DirectorTableBean {
 
     @EJB
     private WorkerDAO jpaWorkerDAO;
@@ -43,7 +43,7 @@ public class DirectorViewBean {
     /**
      * Creates a new instance of DirectorViewBean
      */
-    public DirectorViewBean() {
+    public DirectorTableBean() {
     }
 
     public List<Performance> getAllPerformances() {

@@ -8,10 +8,10 @@
     </ui:define>
     <ui:define name="content">
         <h:form>
-        <p:dataTable var="real_role" value="#{bookkeeperViewBean.allRealPlayedRoles}" paginator="true"
+            <p:dataTable var="real_role" value="#{bookkeeperTableBean.allRealPlayedRoles}" paginator="true"
                      rows="20" emptyMessage="#{msg.emptyRealPlayedRoles}"
                      tableStyle="width: auto" editable="true">
-            <p:ajax event="rowEdit" listener="#{bookkeeperViewBean.onPremiumEdit}"/>
+            <p:ajax event="rowEdit" listener="#{bookkeeperTableBean.onPremiumEdit}"/>
             <p:column>
                 <f:facet name="header">
                     <p:outputLabel value="#{w.performance}"/>

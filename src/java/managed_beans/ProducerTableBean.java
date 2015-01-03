@@ -12,7 +12,6 @@ import dao_interfaces.RoleDAO;
 import entities.Actor;
 import entities.Contract;
 import entities.Performance;
-import static entities.Position.Producer;
 import entities.Role;
 import entities.Worker;
 import java.util.List;
@@ -29,7 +28,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class ProducerViewBean {
+public class ProducerTableBean {
 
     @EJB
     private ContractDAO jpaContractDAO;
@@ -58,7 +57,7 @@ public class ProducerViewBean {
     /**
      * Creates a new instance of ProducerBean
      */
-    public ProducerViewBean() {
+    public ProducerTableBean() {
     }
 
     public List<Performance> getMyPerformances() {
@@ -144,9 +143,7 @@ public class ProducerViewBean {
             context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO,
                     context.getApplication().getResourceBundle(context, "msg")
                     .getString("deleteImpossible"), null));
-
         }
-
     }
     
     public void deleteSelectedContract() {
@@ -159,8 +156,6 @@ public class ProducerViewBean {
             context.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_INFO,
                     context.getApplication().getResourceBundle(context, "msg")
                     .getString("deleteImpossible"), null));
-
         }
-
     }
 }

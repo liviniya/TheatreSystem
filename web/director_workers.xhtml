@@ -9,10 +9,10 @@
     <ui:define name="content">
         <h:form>
             <p:growl id="message" autoUpdate="true" severity="error"/>
-            <p:dataTable id="workers" var="worker" value="#{directorViewBean.allWorkers}" paginator="true"
+            <p:dataTable id="workers" var="worker" value="#{directorTableBean.allWorkers}" paginator="true"
                          rows="10" emptyMessage="#{msg.emptyWorkers}" resizableColumns="true"
                          tableStyle="width: auto" editable="true">
-                <p:ajax event="rowEdit" listener="#{directorViewBean.onWorkerEdit}"/>
+                <p:ajax event="rowEdit" listener="#{directorTableBean.onWorkerEdit}"/>
                 <p:column>
                     <f:facet name="header">
                         <p:outputLabel value="#{w.surname}"/>
@@ -41,7 +41,7 @@
                         <f:facet name="output"><h:outputText value="#{worker.position.toString()}"/></f:facet>
                         <f:facet name="input">
                             <p:selectOneMenu value="#{worker.position}">
-                                <f:selectItems var="position" value="#{directorViewBean.allPositions}"
+                                <f:selectItems var="position" value="#{directorTableBean.allPositions}"
                                                itemLabel="#{position.toString()}" 
                                                itemValue="#{position}"/>
                             </p:selectOneMenu>

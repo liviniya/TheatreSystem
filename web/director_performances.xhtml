@@ -9,10 +9,10 @@
     <ui:define name="content">
         <h:form>
             <p:growl id="message" autoUpdate="true" severity="info"/>
-            <p:dataTable id="performances" var="performance" value="#{directorViewBean.allPerformances}" paginator="true"
+            <p:dataTable id="performances" var="performance" value="#{directorTableBean.allPerformances}" paginator="true"
                          rows="10" emptyMessage="#{msg.emptyPerformances}" tableStyle="width: auto"
                          editable="true" resizableColumns="true">
-                <p:ajax event="rowEdit" listener="#{directorViewBean.onPerformanceEdit}"/>
+                <p:ajax event="rowEdit" listener="#{directorTableBean.onPerformanceEdit}"/>
                 <p:column>
                     <f:facet name="header">
                         <p:outputLabel value="#{w.title}"/>
@@ -61,7 +61,7 @@
                         <f:facet name="input">
                             <p:selectOneMenu value="#{performance.producer}"
                                              converter="#{workerConverterBean}">
-                                <f:selectItems var="producer" value="#{directorViewBean.allProducers}"
+                                <f:selectItems var="producer" value="#{directorTableBean.allProducers}"
                                                itemLabel="#{producer.surname} #{producer.name}" 
                                                itemValue="#{producer}"/>
                             </p:selectOneMenu>
@@ -73,7 +73,7 @@
                 </p:column>
                 <p:column>
                     <p:commandLink styleClass="ui-icon ui-icon-trash" 
-                                   action="#{directorViewBean.setSelectedPerformance(performance)}"
+                                   action="#{directorTableBean.setSelectedPerformance(performance)}"
                                    onclick="deleteConfirmation.show()" ajax="true"/>
                 </p:column>
             </p:dataTable> 
@@ -81,7 +81,7 @@
             <p:confirmDialog widgetVar="deleteConfirmation" message="#{msg.areYouSure}" 
                              severity="alert" appendToBody="true">
                 <p:commandButton value="#{msg.yes}" oncomplete="deleteConfirmation.hide()" process="@this"
-                                 actionListener="#{directorViewBean.deleteSelectedPerformance}"
+                                 actionListener="#{directorTableBean.deleteSelectedPerformance}"
                                  update="performances"/>
                 <p:commandButton value="#{msg.no}" oncomplete="deleteConfirmation.hide()"/>
             </p:confirmDialog>

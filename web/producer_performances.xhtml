@@ -7,7 +7,7 @@
         <ui:include src="producer_navigation.xhtml"/>
     </ui:define>
     <ui:define name="content">
-        <p:dataTable var="performance" value="#{producerViewBean.myPerformances}" paginator="true"
+        <p:dataTable var="performance" value="#{producerTableBean.myPerformances}" paginator="true"
                      rows="4" emptyMessage="#{msg.emptyPerformances}" tableStyle="width: auto" >
             <p:column>
                 <f:facet name="header">

@@ -44,7 +44,7 @@ public class ProducerAddRealRoleBean {
     private Performance performance;
     
     @ManagedProperty(value = "#{producerViewBean}")
-    private ProducerViewBean producerViewBean;
+    private ProducerTableBean producerViewBean;
     
     /**
      * Creates a new instance of ProducerAddRealRoleBean
@@ -98,11 +98,11 @@ public class ProducerAddRealRoleBean {
         this.performance = performance;
     }    
 
-    public ProducerViewBean getProducerViewBean() {
+    public ProducerTableBean getProducerViewBean() {
         return producerViewBean;
     }
 
-    public void setProducerViewBean(ProducerViewBean producerViewBean) {
+    public void setProducerViewBean(ProducerTableBean producerViewBean) {
         this.producerViewBean = producerViewBean;
     }
 }
